@@ -125,6 +125,7 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  username: string;
   roles: ('admin' | 'user')[];
   updatedAt: string;
   createdAt: string;
@@ -273,6 +274,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  username?: T;
   roles?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -8,30 +8,39 @@ export default function Signup(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [error , setError] = useState('')
+    const [error, setError] = useState('')
+    const [success, setSuccess] = useState(false) // Added success state
     const router = useRouter()
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setError('')
+        setSuccess(false) // Reset success on new attempt
 
-        try{
+        if (password !== confirmPassword) {
+            setError('Passwords do not match')
+            return
+        }
+
+        try {
             const response = await fetch(`/api/users`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, password }),
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, username }),
             })
 
-        const data = await response.json()
+            const data = await response.json()
 
-        if(response.ok){
-            router.push('/')
-        } else {
-            setError(data.errors?.[0]?.message || 'Signup failed')
-        }
-    } catch (err) {
-        setError('An error occurred. Please try again.')
-
+            if (response.ok) {
+                setSuccess(true)
+                setTimeout(() => {
+                    router.push('/') 
+                }, 2000)
+            } else {
+                setError(data.errors?.[0]?.message || 'Signup failed')
+            }
+        } catch (err) {
+            setError('An error occurred. Please try again.')
         }
     }
 
@@ -40,7 +49,13 @@ export default function Signup(){
       <form onSubmit={handleSubmit} className="p-8 bg-white shadow-md rounded-lg w-96">
 
         <h1 className="text-2xl font-bold mb-6 text-center text-black">Create Account</h1>
-        {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
+        {error && <p className="text-red-500 mb-4 text-sm font-semibold">{error}</p>}
+        {/* Added success message display */}
+        {success && (
+            <p className="text-green-600 mb-4 text-sm font-semibold text-center italic">
+                Signup successful! Redirecting to login...
+            </p>
+        )}
 
         <div className="mb-4">
           <label className="block text-sm font-medium mb-1 text-black">Username</label>
