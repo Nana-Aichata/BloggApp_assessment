@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
+  auth: true,
   access: {
     create: () => true, 
     read: ({ req: { user } }) => Boolean(user),
@@ -11,7 +12,7 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  
   fields: [
     {
       name: 'username',
@@ -23,7 +24,10 @@ const Users: CollectionConfig = {
       name: 'roles',
       type: 'select',
       hasMany: true,
-      options: ['admin', 'user'],
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'User', value: 'user' },
+      ],
       defaultValue: ['user'],
       required: true,
       saveToJWT: true,

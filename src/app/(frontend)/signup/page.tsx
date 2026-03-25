@@ -23,7 +23,7 @@ export default function Signup(){
         }
 
         try {
-            const response = await fetch(`/api/users`, {
+            const response = await fetch(`${window.location.origin}/api/users`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password, username }),
@@ -37,10 +37,11 @@ export default function Signup(){
                     router.push('/') 
                 }, 2000)
             } else {
-                setError(data.errors?.[0]?.message || 'Signup failed')
+                setError(data.errors?.[0]?.message || 'Signup failed');
             }
         } catch (err) {
-            setError('An error occurred. Please try again.')
+          console.error("Connection Error:", err)
+          setError('Check your terminal for MongoDB connection errors.')
         }
     }
 
@@ -61,7 +62,7 @@ export default function Signup(){
           <label className="block text-sm font-medium mb-1 text-black">Username</label>
           <input
             type="text"
-            className="w-full p-2 border rounded text-black"
+            className="w-fu ll p-2 border rounded text-black"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
