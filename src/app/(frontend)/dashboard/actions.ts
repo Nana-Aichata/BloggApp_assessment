@@ -5,6 +5,9 @@ import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
+
 export async function createPost(formData: FormData) {
   const payload = await getPayload({ config: configPromise })
   const headerList = await headers()
@@ -21,7 +24,6 @@ export async function createPost(formData: FormData) {
     collection: 'posts',
     data: {
       title,
-      // Converting plain text from the form to a basic Lexical rich text format
       content: {
         root: {
           type: 'root',
@@ -38,12 +40,16 @@ export async function createPost(formData: FormData) {
           version: 1,
         },
       },
-      // The author field is handled by defaultValue in Posts.ts, 
-      // but we can pass it explicitly for clarity:
-      author: user.id,
+      author: user.id, // Automatically linked to the logged-in user
     },
   })
 
-  // 3. Refresh the dashboard so the new post appears immediately
   revalidatePath('/dashboard')
+  redirect('/dashboard') // Bring user back to see their new post
+}
+
+export async function logout() {
+  const cookieStore = await cookies()
+  cookieStore.delete('payload-token') // Clears the Payload session
+  redirect('/') // Redirects to the login/home page
 }

@@ -78,6 +78,25 @@ html, body {
   padding-bottom: 48px;
 }
 
+.logout-form {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: contents; 
+}
+
+.logout-form {
+  width: 100%;
+}
+
+.logout-form .nav-item.logout {
+  width: 100%;
+  text-align: left; 
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
 /* 4. Main Content Area - Scrollable */
 .main-content {
   flex-grow: 1;
@@ -118,6 +137,7 @@ html, body {
 
 .create-post-btn {
   background: #ffffff;
+  text-decoration: none;
   border: 1px solid #111827;
   color: #111827;
   padding: 10px 24px;
@@ -155,15 +175,6 @@ html, body {
   font-weight: 700;
 }
 
-.see-more {
-  font-size: 14px;
-  color: #374151;
-  cursor: pointer;
-  margin-left: 750px;
-  position: relative; 
-  top: -25px;
-}
-
 .category-list {
   display: flex;
   gap: 70px;
@@ -175,6 +186,7 @@ html, body {
   background-color: #ba88ae; 
   border-radius: 50%;
   border: 1px solid #c65eae;
+  margin-top: 30px;
 }
 
 /* 7. Post Card Styling */
@@ -240,4 +252,27 @@ html, body {
   font-size: 12px;
   font-weight: 500;
   color: #9ca3af;
+}
+
+/* 8. create post form */
+
+.create-post-form-section {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
+}
+
+.form-group input, 
+.form-group textarea {
+  border: 1px solid #ddd;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: 2px solid #000;
+  border-color: transparent;
 }

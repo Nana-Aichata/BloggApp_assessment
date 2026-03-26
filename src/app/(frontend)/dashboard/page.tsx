@@ -75,6 +75,8 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
 import Link from 'next/link'
+import { createPost } from './actions'
+import { logout } from './actions'
 import './dashboard.css'
 
 export default async function Dashboard() {
@@ -99,7 +101,11 @@ export default async function Dashboard() {
           <button className="nav-item active">Dashboard</button>
           <button className="nav-item">My Posts</button>
           <button className="nav-item">Setting</button>
-          <button className="nav-item logout">Logout</button>
+          <form action={logout} className="logout-form">
+            <button type="submit" className="nav-item logout">
+              Logout
+            </button>
+          </form>
         </nav>
       </aside>
 
@@ -115,13 +121,20 @@ export default async function Dashboard() {
             </p>
             
           </div>
-          <button className="create-post-btn">Create a Post</button>
+          {user ? (
+            <Link href="/dashboard/create" className="create-post-btn">
+              Create a Post
+            </Link>
+          ) : (
+            <Link href="/" className="create-post-btn">
+              Login to Post
+            </Link>
+          )}
         </header>
 
         <section className="categories-section">
           <div className="section-header">
             <h2>Top Categories</h2>
-            <span className="see-more">See More --&gt;</span>
           </div>
           <div className="category-list">
             {[1, 2, 3, 4, 5, 6].map((i) => (
