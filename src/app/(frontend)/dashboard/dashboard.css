@@ -96,6 +96,11 @@ html, body {
   margin-bottom: 56px;
 }
 
+.header-text {
+  margin-left: -50px; /* Pushes the entire block to the right */
+  text-align: left; /* Aligns the text inside the block to the right */
+}
+
 .header-text h1 {
   font-size: 36px;
   font-weight: 700;
@@ -121,6 +126,8 @@ html, body {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.2s;
+  margin-top: -40px;
+  margin-right: -50px;
 }
 
 .create-post-btn:hover {
@@ -131,12 +138,15 @@ html, body {
 /* 6. Categories Section */
 .categories-section {
   margin-bottom: 48px;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-left: -50px;
 }
 
 .section-title-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 24px;
 }
 
@@ -150,11 +160,13 @@ html, body {
   color: #374151;
   cursor: pointer;
   margin-left: 750px;
+  position: relative; 
+  top: -25px;
 }
 
 .category-list {
   display: flex;
-  gap: 50px;
+  gap: 70px;
 }
 
 .category-circle {

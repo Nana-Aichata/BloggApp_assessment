@@ -110,7 +110,10 @@ export default async function Dashboard() {
             <h1>
               Welcome Back, {user?.username || user?.email || 'Guest'}
             </h1>
-            <p>Your ideas have a place here—start writing and share your thoughts with the world.</p>
+            <p>Your ideas have a place here—start writing and share your thoughts with the world.
+              Let’s turn your creativity into something impactful.
+            </p>
+            
           </div>
           <button className="create-post-btn">Create a Post</button>
         </header>
