@@ -1,82 +1,3 @@
-/* 
-'use client'
-import Link from 'next/link'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-
-export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const router = useRouter()
-  const formRef = useRouter as any
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError('')
-
-    try {
-      const response = await fetch(`/api/users/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-
-      const data = await response.json()
-
-      if (response.ok) {
-        localStorage.setItem('payload-token', data.token)
-        router.push('/dashboard') 
-      } else {
-        setError(data.errors?.[0]?.message || 'Login failed')
-      }
-    } catch (err) {
-      setError('An error occurred. Please try again.')
-    }
-  }
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <form onSubmit={handleSubmit} className="p-8 bg-white shadow-md rounded-lg w-96">
-
-        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
-        {error && <p className="text-red-500 mb-4 text-sm">{error}</p>}
-
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Email</label>
-          <input
-            type="email"
-            className="w-full p-2 border rounded"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-sm font-medium mb-1">Password</label>
-          <input
-            type="password"
-            className="w-full p-2 border rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <button type="submit" className="w-full bg-black text-white p-2 rounded hover:bg-zinc-800">
-          Login
-        </button>
-
-        <p className="mt-4 text-center text-sm text-black">
-          Don't have an account? <Link href="/signup" className="text-blue-600">Sign Up</Link>
-        </p>
-      </form>
-    </div>
-  )
-}
-  */
-
 'use client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -90,37 +11,45 @@ export default function AuthPage() {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  //Login
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
-    if (password !== confirmPassword) {
-            setError('Passwords do not match')
-            return
-        }
         
     try {
-      const res = await fetch(`${window.location.origin}/api/users/login`, {
+      const response = await fetch(`${window.location.origin}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
-      if (res.ok) router.push('/dashboard')
+      if (response.ok) router.push('/dashboard')
+
       else setError('Invalid email or password')
+
     } catch (err) {
       setError('Login failed. Please try again.')
     }
   }
 
-  const handleSignup = async (e: React.FormEvent) => {
+  //Signup
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+  if (password !== confirmPassword) {
+              setError('Passwords do not match')
+              return
+          }
+
     try {
-      const res = await fetch(`${window.location.origin}/api/users`, {
+      const response = await fetch(`${window.location.origin}/api/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, username }),
       })
-      if (res.ok) setIsSignup(false) // Switch to login on success
+
+      if (response.ok) setIsSignup(false)
+
       else setError('Signup failed')
+
     } catch (err) {
       setError('An error occurred.')
     }
@@ -130,7 +59,7 @@ export default function AuthPage() {
     <div className="w-full flex justify-center">
       <div className={`auth-container ${isSignup ? 'right-panel-active' : ''}`}>
         
-        {/* SIGN UP FORM */}
+        // Signup form
         <div className="form-container sign-up-container">
           <form onSubmit={handleSignup}>
             <h1>Create Account</h1>
@@ -142,7 +71,7 @@ export default function AuthPage() {
           </form>
         </div>
 
-        {/* SIGN IN FORM */}
+        //Login form
         <div className="form-container sign-in-container">
           <form onSubmit={handleLogin}>
             <h1>Sign in</h1>
@@ -152,7 +81,7 @@ export default function AuthPage() {
           </form>
         </div>
 
-        {/* OVERLAY PANELS */}
+        //Overlay panels
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-left">
