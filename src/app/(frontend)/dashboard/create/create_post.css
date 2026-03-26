@@ -1,0 +1,143 @@
+.mobile-create-container {
+  max-width: 480px;
+  margin: 20px auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  background-color: #F6F7F9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.create-header{
+  background-color: #000;
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-indicator {
+  background-color: #fff;
+  color: #000;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.create-header h1 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+.subheader-bar {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.subheader-bar h2 {
+  font-size: 16px;
+  margin: 0;
+  font-weight: 500;
+  color: #555;
+}
+
+.input-section {
+  padding: 20px 20px 0 20px;
+}
+
+.input-section:last-of-type {
+  padding-bottom: 20px;
+}
+
+.input-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.input-box p, .input-box h3 {
+  margin: 0 0 15px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #666;
+}
+
+.title-input {
+  width: 100%;
+  border: 1px solid #EAECEF;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #F9FAFB;
+  color: #000;
+}
+
+.content-textarea {
+  width: 100%;
+  border: 1px solid #EAECEF;
+  border-radius: 8px;
+  padding: 12px;
+  height: 200px;
+  font-size: 14px;
+  resize: none;
+  background-color: #F9FAFB;
+  font-family: inherit;
+}
+
+.title-input:focus, .content-textarea:focus {
+  outline: 2px solid #000;
+  border-color: transparent;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cancel-btn {
+  text-decoration: none;
+  color: #000;
+  border: 1px solid #EAECEF;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.submit-btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.submit-btn:disabled {
+  background-color: #DDE1E6;
+  color: #A4ABB3;
+  cursor: not-allowed;
+}

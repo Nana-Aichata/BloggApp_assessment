@@ -1,63 +1,66 @@
-import React from 'react'
-import { getPayload } from 'payload'
-import configPromise from '@/payload.config'
-import { headers } from 'next/headers'
-import { redirect } from 'next/navigation'
+'use client'
+import React, { useState } from 'react'
 import { createPost } from '../actions'
-import '../dashboard.css' 
+import './create_post.css'
 
-export default async function CreatePostPage() {
-  const payload = await getPayload({ config: configPromise })
-  const { user } = await payload.auth({ headers: await headers() })
-
-  // Requirement: Ensure unauthenticated users cannot create posts
-  if (!user) {
-    redirect('/')
-  }
+export default function CreatePostPage() {
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
 
   return (
-    <div className="dashboard-wrapper">
-      <main className="main-content">
-        <header className="content-header">
-          <h1>Create a New Post</h1>
-          <p>Share your latest thoughts with the world.</p>
-        </header>
+    <div className="mobile-create-container">
+      <header className="create-header">
+        <span className="profile-indicator">U</span>
+        <h1>New Post</h1>
+        <button className="icon-btn edit-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+          </svg>
+        </button>
+      </header>
 
-        <section className="create-post-form-section">
-          <form action={createPost} className="flex flex-col gap-6 max-w-2xl">
-            <div className="form-group">
-              <label htmlFor="title" className="block mb-2 font-bold">Title</label>
-              <input 
-                id="title"
-                name="title" 
-                placeholder="Enter an engaging title..." 
-                className="w-full p-3 border rounded shadow-sm text-black" 
-                required 
-              />
-            </div>
+      <div className="subheader-bar">
+        <h2>Create & Publish</h2>
+      </div>
 
-            <div className="form-group">
-              <label htmlFor="content" className="block mb-2 font-bold">Content</label>
-              <textarea 
-                id="content"
-                name="content" 
-                placeholder="Write your story here..." 
-                className="w-full p-3 border rounded h-64 shadow-sm text-black" 
-                required 
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <button type="submit" className="create-post-btn">
-                Publish Post
-              </button>
-              <a href="/dashboard" className="nav-item" style={{ textAlign: 'center', alignSelf: 'center' }}>
-                Cancel
-              </a>
-            </div>
-          </form>
+      <form action={createPost} className="create-post-form">
+        <section className="input-section">
+          <div className="input-box">
+            <p>Post Title</p>
+            <input 
+              type="text" 
+              name="title"
+              placeholder="Give your post a title..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="title-input"
+            />
+          </div>
         </section>
-      </main>
+
+        <section className="input-section">
+          <div className="input-box">
+            <h3>Post Content</h3>
+            <textarea
+              name="content"
+              placeholder="Write your story here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              required
+              className="content-textarea"
+            />
+            
+            <div className="form-actions">
+              <a href="/dashboard" className="cancel-btn">Cancel</a>
+              <button type="submit" className="submit-btn" disabled={!title || !content}>
+                Proceed
+              </button>
+            </div>
+          </div>
+        </section>
+      </form>
     </div>
   )
 }
