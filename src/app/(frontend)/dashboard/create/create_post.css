@@ -1,37 +1,38 @@
-/* ============== PAGE TITLE (Outside the container) ============== */
 .page-title {
   font-size: 32px;
   font-weight: 700;
   color: #111111;
-  text-align: center;
-  margin: 60px auto 30px auto;
-  max-width: 1100px;
-  width: 88%;
+  text-align: left;
+  margin-top: 20px;
 }
 
-/* ============== CREATE CONTAINER (Pink box) ============== */
 .create-container {
-  width: 140%;
-  max-width: 2000px;           /* ← CHANGE THIS to increase/decrease overall width */
-  margin: 60px auto;              /* Centers the container */
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  padding: 35px 50px;
-  box-sizing: border-box;
+  position: relative;          
+  height: 85vh;                    
+  width: 180vh;             
+  margin: 30px auto;              
+  padding: 60px 40px 40px 40px; /* Increased top padding to make room for the label */
+  background: white;
+  border-radius: 16px;           
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid #f0f0f0;
 }
 
 /* Title Input */
 .field-label {
-  font-size: 14px;
+  position: absolute;        
+  top: 20px;                 
+  left: 40px;                
+  font-size: 20px;
   font-weight: 600;
   color: #555;
-  margin-bottom: 8px;
   display: block;
 }
 
 .title-input {
+  position: relative;
   width: 100%;
+  right: 60px;
   border: 1px solid #d1d5db;
   border-radius: 8px;
   padding: 14px 16px;
@@ -48,15 +49,21 @@
 
 /* Post Label */
 .post-label {
-  font-size: 14px;
+  position: absolute;
+  top: 140px;                  
+  left: 40px;                 
+  font-size: 20px;
   font-weight: 600;
   color: #555;
   margin-bottom: 10px;
   display: block;
 }
 
-/* Post Editor (Toolbar + Textarea) */
 .post-editor {
+  position: relative;
+  width: 100%;
+  top: 30px;
+  right: 60px;
   border: 1px solid #d1d5db;
   border-radius: 10px;
   overflow: hidden;
@@ -124,7 +131,8 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 16px;
+  gap: 780px;
+  margin-top: 20px;
 }
 
 .cancel-btn, .submit-btn {
@@ -140,6 +148,7 @@
   background: white;
   border: 1px solid #d1d5db;
   color: #555;
+  text-decoration: none;
 }
 
 .cancel-btn:hover {

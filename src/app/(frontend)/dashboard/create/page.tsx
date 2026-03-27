@@ -9,7 +9,6 @@ export default function CreatePostPage() {
 
   return (
     <>
-      {/* Title OUTSIDE the container - This should now appear */}
       <h1 className="page-title">Create a New Post</h1>
 
       <div className="create-container">
@@ -18,7 +17,7 @@ export default function CreatePostPage() {
           <input 
             type="text" 
             name="title"
-            placeholder="This is the title"
+            placeholder="Enter your title here"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
