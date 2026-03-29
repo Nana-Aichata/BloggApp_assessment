@@ -14,6 +14,7 @@ export default function CreatePostPage() {
   const [title, setTitle] = useState("")
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const editorRef = useRef<HTMLDivElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null) 
 
   const toggleCategory = (cat: string) => {
     if (!selectedCategories.includes(cat)) {
@@ -29,6 +30,22 @@ export default function CreatePostPage() {
   const applyCommand = (command: string, value: string = '') => {
     document.execCommand(command, false, value)
     if (editorRef.current) editorRef.current.focus()
+  }
+
+  // New function to handle local image uploads
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Image = event.target?.result as string;
+        // Insert the image directly into the contentEditable area
+        applyCommand('insertImage', base64Image);
+      };
+      reader.readAsDataURL(file);
+    }
+    // Clear the input so the same image can be uploaded again if deleted
+    e.target.value = '';
   }
 
   return (
@@ -87,10 +104,18 @@ export default function CreatePostPage() {
                 if (url) applyCommand('createLink', url);
               }}>🔗</button>
               
-              <button type="button" className="tool-btn" onClick={() => {
-                const url = prompt("Enter the image URL:");
-                if (url) applyCommand('insertImage', url);
-              }}>🖼️</button>
+              <button type="button" className="tool-btn" onClick={() => fileInputRef.current?.click()}>
+                  🖼️
+                </button>
+                
+                {/* Hidden File Input */}
+                <input 
+                  type="file" 
+                  ref={fileInputRef} 
+                  style={{ display: 'none' }} 
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
 
               <span className="tool-divider"></span>
 

@@ -33,18 +33,38 @@ html, body {
 }
 
 .profile-section {
+  padding: 30px;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-container {
   display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 48px;
+  align-items: center;
+  gap: 15px; /* Adjust spacing as needed */
+  position: relative; /* Position context for the edit button if needed */
 }
 
 .profile-circle {
   width: 140px;
   height: 140px;
-  border: 1.5px solid #1a1a1a;
   border-radius: 50%;
-  background-color: #f9fafb;
+  border: 1.5px solid #fff;
+  background-color: #ddd;
+  overflow: hidden; /* Important for keeping the image circular */
+}
+
+.edit-profile-btn {
+  background-color: transparent;
+  color: #888;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0; /* Remove default button padding */
+}
+
+.edit-profile-btn:hover {
+  color: #111;
 }
 
 .sidebar-nav {
@@ -212,8 +232,32 @@ html, body {
   height: 80px;
   border-radius: 50%;
   border: 1.5px solid #1a1a1a;
-  background-color: #fff;
+  background-color: #ffffff3e;
   cursor: pointer;
+
+  display: flex;            /* Enables Flexbox */
+  justify-content: center;   /* Centers horizontally */
+  align-items: center;
+}
+
+.clear-filter {
+  font-size: 14px;
+  color: #404042;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.no-posts {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+/* Ensure Links in the sidebar behave like the buttons */
+a.nav-item {
+  text-decoration: none;
+  display: block;
 }
 
 /* Arrow Buttons */

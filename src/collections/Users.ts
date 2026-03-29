@@ -21,6 +21,12 @@ const Users: CollectionConfig = {
       unique: true, 
     },
     {
+      name: 'profilePicture',
+      type: 'upload',
+      relationTo: 'media', // Make sure you have a 'media' collection
+      required: false,
+    },
+    {
       name: 'roles',
       type: 'select',
       hasMany: true,

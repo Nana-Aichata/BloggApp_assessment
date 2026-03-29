@@ -1,94 +1,135 @@
+// (frontend)/dashboard/page.tsx
 
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
 import Link from 'next/link'
-import { createPost } from './actions'
 import { logout } from './actions'
 import CategoryList from './CategoryList'
 import './dashboard.css'
+import ProfileSection from './ProfileSection'
 
-export default async function Dashboard() {
-
+export default async function Dashboard({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
   const payload = await getPayload({ config: configPromise })
-  const { user } = await payload.auth({ headers: await headers() })
+  const result = await payload.auth({ headers: await headers() })
+  const user = result.user
+
+  // Ensure user is an object before accessing properties
+  if (!user || typeof user !== 'object') {
+    // Handle the case where user is null or not an object
+    // You could redirect to login here
+    return <div>Loading user...</div> 
+  }
+  
+  const params = await searchParams
+  const categoryFilter = params.category as string
+  const viewFilter = params.view as string
+
+  // Build the database query
+  const query: any = {}
+
+  // Filter by category if selected
+  if (categoryFilter) {
+    query.categories = {
+      contains: categoryFilter,
+    }
+  }
+
+  // Filter by current user if "My Posts" is clicked
+  if (viewFilter === 'mine' && user) {
+    query.author = {
+      equals: user.id,
+    }
+  }
 
   const posts = await payload.find({
     collection: 'posts',
-    depth: 1, 
+    depth: 1,
+    where: query,
   })
 
-  
+  // Extract necessary user data, casting to User type for better type safety
+  const userData = {
+    id: user.id,
+    profilePicture: user.profilePicture,
+  };
+
   return (
     <div className="dashboard-wrapper">
       {/* SIDEBAR */}
       <aside className="sidebar">
-        <div className="profile-section">
-          <div className="profile-circle"></div>
-        </div>
+        {/* Pass the extracted user data to the client component */}
+        <ProfileSection user={userData} />
         
         <nav className="sidebar-nav">
-          <button className="nav-item active">Dashboard</button>
-          <button className="nav-item">My Posts</button>
+          {/* Dashboard link shows everything */}
+          <Link href="/dashboard" className={`nav-item ${!viewFilter ? 'active' : ''}`}>
+            Dashboard
+          </Link>
+          {/* My Posts link filters by user ID */}
+          <Link href="/dashboard?view=mine" className={`nav-item ${viewFilter === 'mine' ? 'active' : ''}`}>
+            My Posts
+          </Link>
           <button className="nav-item">Setting</button>
           <form action={logout} className="logout-form">
-            <button type="submit" className="nav-item logout">
-              Logout
-            </button>
+            <button type="submit" className="nav-item logout">Logout</button>
           </form>
         </nav>
       </aside>
 
-      {/* Header */}
       <main className="main-content">
         <header className="content-header">
           <div className="header-text">
             <h1>
-              Welcome Back, {user?.username || user?.email || 'Guest'}
+              {viewFilter === 'mine' ? 'My Published Posts' : `Welcome Back, ${user?.username || 'Guest'}`}
             </h1>
-            <p>Your ideas have a place here—start writing and share your thoughts with the world.
-              Let’s turn your creativity into something impactful.
+            <p>
+              {categoryFilter 
+                ? `Showing posts in "${categoryFilter}"` 
+                : "Your ideas have a place here—start writing and share your thoughts with the world."}
             </p>
-            
           </div>
-          {user ? (
+          {user && (
             <Link href="/dashboard/create" className="create-post-btn">
               Create a Post
-            </Link>
-          ) : (
-            <Link href="/" className="create-post-btn">
-              Login to Post
             </Link>
           )}
         </header>
 
-      {/* Categories */}
-      <section className="categories-section">
+        <section className="categories-section">
           <div className="section-header">
             <h2>Top Categories</h2>
+            {categoryFilter && <Link href="/dashboard" className="clear-filter">Clear Filter</Link>}
           </div>
           <CategoryList />
         </section>
     
-        {/* Posts List */}
         <section className="posts-list">
-          {posts.docs.map((post) => (
-            <div key={post.id} className="post-card">
-              <div className="post-image-box"></div>
-              <div className="post-content">
-                <div className="post-tags">
-                  {post.categories?.map((cat: string) => (
-                    <span key={cat} className="tag">{cat}</span>
-                  ))}
-                </div>
-                <h3 className="text-xl font-bold">{post.title}</h3>
-                <div className="post-meta">
-                  <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                  <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
+          {posts.docs.length > 0 ? (
+            posts.docs.map((post) => (
+              <div key={post.id} className="post-card">
+                <div className="post-image-box"></div>
+                <div className="post-content">
+                  <div className="post-tags">
+                    {post.categories?.map((cat: string) => (
+                      <span key={cat} className="tag">{cat}</span>
+                    ))}
+                  </div>
+                  <h3 className="text-xl font-bold">{post.title}</h3>
+                  <div className="post-meta">
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                    <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <p className="no-posts">No posts found for this selection.</p>
+          )}
         </section>
       </main>
     </div>
