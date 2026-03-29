@@ -8,7 +8,7 @@
 html, body {
   height: 100%;
   width: 100%;
-  overflow: hidden; 
+  overflow: auto; 
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
@@ -130,9 +130,9 @@ html, body {
 
 .header-text p {
   max-width: 640px;
-  font-size: 15px;
+  font-size: 20px;
   line-height: 1.6;
-  color: #6b7280;
+  color: #1a1a1a;
 }
 
 .create-post-btn {
@@ -156,6 +156,15 @@ html, body {
 }
 
 /* 6. Categories Section */
+.categories-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 30px; 
+  padding-right: 0; 
+  width: 100%;
+}
+
 .categories-section {
   margin-bottom: 48px;
   justify-content: space-between;
@@ -163,30 +172,76 @@ html, body {
   margin-left: -50px;
 }
 
-.section-title-row {
+.section-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 24px;
 }
 
-.section-title-row h2 {
-  font-size: 20px;
+.section-header h2 {
+  font-size: 30px;
   font-weight: 700;
 }
 
+/* The scrollable area */
 .category-list {
   display: flex;
-  gap: 70px;
+  gap: 60px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  flex-grow: 1;
+}
+
+.category-list::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+/* Individual items */
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0; /* Prevents circles from squishing */
+  gap: 8px;
 }
 
 .category-circle {
-  width: 72px;
-  height: 72px;
-  background-color: #ba88ae; 
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 1px solid #c65eae;
-  margin-top: 30px;
+  border: 1.5px solid #1a1a1a;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Arrow Buttons */
+.nav-arrow-plain {
+  background: none;
+  border: none;
+  font-size: 24px; /* Make the arrow symbol larger */
+  color: #1a1a1a;
+  cursor: pointer;
+  position: absolute;
+  top: 40%; /* Aligns with the circles, not the text */
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: 10px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.nav-arrow-plain:hover {
+  opacity: 0.6;
+  transform: translateY(-50%) scale(1.2); /* Slight grow effect on hover */
+}
+
+.nav-arrow-plain.left {
+  left: -20px;
+}
+
+.nav-arrow-plain.right {
+  right: -60px;
 }
 
 /* 7. Post Card Styling */

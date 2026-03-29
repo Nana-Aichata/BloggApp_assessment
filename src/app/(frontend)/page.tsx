@@ -14,6 +14,7 @@ export default function AuthPage() {
   //Login
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError('')
         
     try {
       const response = await fetch(`${window.location.origin}/api/users/login`, {
@@ -21,12 +22,20 @@ export default function AuthPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       })
-      if (response.ok) router.push('/dashboard')
 
-      else setError('Invalid email or password')
+      const data = await response.json()
 
+      if (response.ok) {
+        router.push('/dashboard')
+      } else {
+        if (data.errors?.[0]?.message?.toLowerCase().includes('not found')) {
+          setError('No account found with this email. Please sign up first.')
+        } else {
+          setError('Invalid email or password. Please try again.')
+        }
+      }
     } catch (err) {
-      setError('Login failed. Please try again.')
+      setError('Login failed. Please check your connection.')
     }
   }
 
@@ -74,10 +83,15 @@ export default function AuthPage() {
         //Login form
         <div className="form-container sign-in-container">
           <form onSubmit={handleLogin}>
-            <h1>Sign in</h1>
+            <h1>Login</h1>
+            {error && (
+              <p style={{ color: '#ff4d4d', fontSize: '14px', marginBottom: '10px' }}>
+                {error}
+              </p>
+            )}
             <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <button className="auth-btn">Sign In</button>
+            <button className="auth-btn">Login</button>
           </form>
         </div>
 
@@ -87,7 +101,7 @@ export default function AuthPage() {
             <div className="overlay-panel overlay-left">
               <h1>Welcome Back!</h1>
               <p>To keep connected with us please login with your personal info</p>
-              <button className="ghost auth-btn" onClick={() => setIsSignup(false)}>Sign In</button>
+              <button className="ghost auth-btn" onClick={() => setIsSignup(false)}>Login</button>
             </div>
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>

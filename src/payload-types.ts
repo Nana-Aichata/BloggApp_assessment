@@ -187,6 +187,15 @@ export interface Post {
     };
     [k: string]: unknown;
   };
+  categories:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   author?: (string | null) | User;
   updatedAt: string;
   createdAt: string;
@@ -318,6 +327,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface PostsSelect<T extends boolean = true> {
   title?: T;
   content?: T;
+  categories?: T;
   author?: T;
   updatedAt?: T;
   createdAt?: T;

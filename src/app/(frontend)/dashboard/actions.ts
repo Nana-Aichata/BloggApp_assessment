@@ -18,12 +18,14 @@ export async function createPost(formData: FormData) {
 
   const title = formData.get('title') as string
   const content = formData.get('content') as string
+  const categories = JSON.parse(formData.get('categories') as string || '[]')
 
   // 2. Create the post in the 'posts' collection
   await payload.create({
     collection: 'posts',
     data: {
       title,
+      categories,
       content: {
         root: {
           type: 'root',
