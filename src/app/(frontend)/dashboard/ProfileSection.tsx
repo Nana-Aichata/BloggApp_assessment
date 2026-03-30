@@ -4,7 +4,7 @@ interface UserData {
   id: string;
   profilePicture?: {
     url: string;
-  };
+  } | null; // Allow null to satisfy the incoming data
 }
 
 export default function ProfileSection({ user }: { user: UserData }) {
