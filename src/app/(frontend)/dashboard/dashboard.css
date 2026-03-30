@@ -17,6 +17,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   background-color: #f7e2ec;
+  /*background-color: #ffffff;*/
 }
 
 /* Sidebar */
@@ -369,3 +370,21 @@ a.nav-item {
   outline: 2px solid #000;
   border-color: transparent;
 }
+
+
+.post-full-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin: 24px 0;
+  display: block;
+}
+
+.post-full-content div {
+  margin-bottom: 1.5rem;
+}
+
+/* Ensure formatting (Bold/Italic/Underline) shows up correctly */
+.post-full-content b, .post-full-content strong { font-weight: bold; }
+.post-full-content i, .post-full-content em { font-style: italic; }
+.post-full-content u { text-decoration: underline; }

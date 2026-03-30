@@ -104,31 +104,30 @@ export default async function Dashboard({
     
         <section className="posts-list">
           {posts.docs.map((post: any) => {
-            // Extract the HTML string from the Lexical content structure
             const rawContent = post.content?.root?.children?.[0]?.children?.[0]?.text || "";
 
             return (
               <div key={post.id} className="post-card">
-                <div className="post-content">
-                  <div className="post-tags">
-                    {post.categories?.map((cat: string) => (
-                      <span key={cat} className="tag">{cat}</span>
-                    ))}
-                  </div>
-                  <h3 className="text-xl font-bold">{post.title}</h3>
-                  
-                  {/* Use dangerouslySetInnerHTML to render formatting */}
-                  {/* We add 'post-text-content' to target this specifically in CSS */}
-                  <div 
-                    className="post-text post-text-content" 
-                    dangerouslySetInnerHTML={{ __html: rawContent }} 
-                  />
+                <Link href={`/dashboard/post/${post.id}`} className="post-link-wrapper" style={{ textDecoration: 'none', color: 'inherit', width: '100%', display: 'flex' }}>
+                  <div className="post-content">
+                    <div className="post-tags">
+                      {post.categories?.map((cat: string) => (
+                        <span key={cat} className="tag">{cat}</span>
+                      ))}
+                    </div>
+                    <h3 className="text-xl font-bold">{post.title}</h3>
+                    
+                    <div 
+                      className="post-text post-text-content" 
+                      dangerouslySetInnerHTML={{ __html: rawContent }} 
+                    />
 
-                  <div className="post-meta">
-                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                    <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
+                    <div className="post-meta">
+                      <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                      <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
             )
           })}
