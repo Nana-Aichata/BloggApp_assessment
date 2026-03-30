@@ -386,7 +386,7 @@ a.nav-item {
   margin-bottom: 1.5rem;
 }
 
-/* Ensure formatting (Bold/Italic/Underline) shows up correctly */
+
 .post-full-content b, .post-full-content strong { font-weight: bold; }
 .post-full-content i, .post-full-content em { font-style: italic; }
 .post-full-content u { text-decoration: underline; }

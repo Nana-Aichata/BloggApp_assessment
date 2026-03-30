@@ -12,7 +12,7 @@ export async function createPost(formData: FormData) {
   const payload = await getPayload({ config: configPromise })
   const headerList = await headers()
   
-  // 1. Safety check: ensure the user is still logged in
+  // ensure the user is still logged in
   const { user } = await payload.auth({ headers: headerList })
   if (!user) throw new Error('You must be logged in to post')
 
@@ -20,7 +20,7 @@ export async function createPost(formData: FormData) {
   const content = formData.get('content') as string
   const categories = JSON.parse(formData.get('categories') as string || '[]')
 
-  // 2. Create the post in the 'posts' collection
+  // 
   await payload.create({
     collection: 'posts',
     data: {
@@ -52,8 +52,8 @@ export async function createPost(formData: FormData) {
 
 export async function logout() {
   const cookieStore = await cookies()
-  cookieStore.delete('payload-token') // Clears the Payload session
-  redirect('/') // Redirects to the login/home page
+  cookieStore.delete('payload-token') 
+  redirect('/')
 }
 
 export async function deletePost(id: string) {

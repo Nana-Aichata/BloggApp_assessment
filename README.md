@@ -1,71 +1,68 @@
-<<<<<<< HEAD
-# Payload Blank Template
+# Blogg App Assessment
 
-This template comes configured with the bare minimum to get started on anything you need.
+## ⚡ Tech Stack
+* **Backend:** PayloadCMS
+* **Database:** MongoDB
+* **Frontend:** Next.js 
 
-## Quick start
+---
 
-This template can be deployed directly from our Cloud hosting and it will setup MongoDB and cloud S3 object storage for media.
+## 🔧 Setup Instructions
 
-## Quick Start - local setup
+### Local Development
+1.  **Clone the repository:**
+    ```bash
+    git clone <your-repo-url>
+    ```
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+3.  **Run PayloadCMS:**
+    ```bash
+    npm run dev
+    ```
 
-To spin up this template locally, follow these steps:
+### Required Environment Variables
+Create a `.env` file in your root directory:
+* `MONGODB_URL`: Your MongoDB connection string.
+* `PAYLOAD_SECRET`: A secure string for sessions.
+* `NEXT_PUBLIC_SERVER_URL`: `http://localhost:3000` (Local) or your live Backend URL.
 
-### Clone
+---
 
-After you click the `Deploy` button above, you'll want to have standalone copy of this repo on your machine. If you've already cloned this repo, skip to [Development](#development).
+## 🔑 Authentication Flow
+The application uses PayloadCMS’s built-in authentication system:
 
-### Development
+* **Sign Up/Login:** Users create accounts via the Next.js frontend, which communicates with the Payload `/api/users` endpoint. If they already have an account they can just login
 
-1. First [clone the repo](#clone) if you have not done so already
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. You'll need to add the `MONGODB_URL` from your Cloud project to your `.env` if you want to use S3 storage and the MongoDB database that was created for you.
+* **Session Management:** Upon successful login, a JWT (JSON Web Token) is generated to manage the user's session. After a while of inacivity the user is logout 
 
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
-4. open `http://localhost:3000` to open the app in your browser
+* **Access Control:** Only authenticated users can access the dashboard, after accessing the dashboard the user can see post from other user, create post and see the posts they publish.
 
-That's it! Changes made in `./src` will be reflected in your app. Follow the on-screen instructions to login and create your first admin user. Then check out [Production](#production) once you're ready to build and serve your app, and [Deployment](#deployment) when you're ready to go live.
+---
 
-#### Docker (Optional)
+## 🖼 Frontend Integration
+* **The Request:** When a user opens the blog, Next.js sends a "Get" request to the PayloadCMS API (e.g., /api/posts).
 
-If you prefer to use Docker for local development instead of a local MongoDB instance, the provided docker-compose.yml file can be used.
+* **The Content:** PayloadCMS sends back the blog data in a structured format called JSON. This includes the title, the body text, and information about the author.
 
-To do so, follow these steps:
+* **The Relationship:** Because the Posts and Users collections are linked, Payload automatically includes the Author's name in the data so the frontend can display it immediately.
 
-- Modify the `MONGODB_URL` in your `.env` file to `mongodb://127.0.0.1/<dbname>`
-- Modify the `docker-compose.yml` file's `MONGODB_URL` to match the above `<dbname>`
-- Run `docker-compose up` to start the database, optionally pass `-d` to run in the background.
+* **Live Updates:** Since the frontend is connected to the live Payload API, any post created in the Admin Dashboard appears on the website instantly.
 
-## How it works
+---
 
-The Payload config is tailored specifically to the needs of most websites. It is pre-configured in the following ways:
+## ☁️ Deployment
+* **Frontend:** Hosted on **Vercel**, linked directly to the GitHub repository for CI/CD.
+* **Backend:** 
+* **Database:** MongoDB Atlas.
 
-### Collections
+---
 
-See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
-
-- #### Users (Authentication)
-
-  Users are auth-enabled collections that have access to the admin panel.
-
-  For additional help, see the official [Auth Example](https://github.com/payloadcms/payload/tree/main/examples/auth) or the [Authentication](https://payloadcms.com/docs/authentication/overview#authentication-overview) docs.
-
-- #### Media
-
-  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
-
-### Docker
-
-Alternatively, you can use [Docker](https://www.docker.com) to spin up this template locally. To do so, follow these steps:
-
-1. Follow [steps 1 and 2 from above](#development), the docker-compose file will automatically use the `.env` file in your project root
-1. Next run `docker-compose up`
-1. Follow [steps 4 and 5 from above](#development) to login and create your first admin user
-
-That's it! The Docker instance will help you get up and running quickly while also standardizing the development environment across your teams.
-
-## Questions
-
-If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).
-=======
-# BloggApp_assessment
->>>>>>> 7dc28e4cd359f553a745e537a6103160cced6a31
+## 📖 Usage
+1.  Open the web app
+2.  **Sign Up** for a new account
+3.  **Log In** to access the dashboard
+4.  **Create a Post** by filling out the title, category and content.
+5.  View your post on the home feed, where your **Author Name** will be automatically displayed.
