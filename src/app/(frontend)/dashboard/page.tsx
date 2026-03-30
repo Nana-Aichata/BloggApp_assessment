@@ -50,6 +50,10 @@ export default async function Dashboard({
     profilePicture: user.profilePicture,
   };
 
+  const getPlainText = (html: string) => {
+    return html.replace(/<[^>]*>?/gm, ''); 
+  };
+
   return (
     <div className="dashboard-wrapper">
       {/* SIDEBAR */}
@@ -99,8 +103,11 @@ export default async function Dashboard({
         </section>
     
         <section className="posts-list">
-          {posts.docs.length > 0 ? (
-            posts.docs.map((post) => (
+          {posts.docs.map((post: any) => {
+            // Extract the HTML string from the Lexical content structure
+            const rawContent = post.content?.root?.children?.[0]?.children?.[0]?.text || "";
+
+            return (
               <div key={post.id} className="post-card">
                 <div className="post-content">
                   <div className="post-tags">
@@ -109,16 +116,22 @@ export default async function Dashboard({
                     ))}
                   </div>
                   <h3 className="text-xl font-bold">{post.title}</h3>
+                  
+                  {/* Use dangerouslySetInnerHTML to render formatting */}
+                  {/* We add 'post-text-content' to target this specifically in CSS */}
+                  <div 
+                    className="post-text post-text-content" 
+                    dangerouslySetInnerHTML={{ __html: rawContent }} 
+                  />
+
                   <div className="post-meta">
                     <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                     <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <p className="no-posts">No posts found for this selection.</p>
-          )}
+            )
+          })}
         </section>
       </main>
     </div>
