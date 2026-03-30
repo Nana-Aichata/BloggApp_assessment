@@ -47,7 +47,9 @@ export default async function Dashboard({
 
   const userData = {
     id: user.id,
-    profilePicture: user.profilePicture,
+    profilePicture: typeof user.profilePicture === 'object' && user.profilePicture?.url 
+      ? { url: user.profilePicture.url } 
+      : undefined,
   };
 
   const getPlainText = (html: string) => {

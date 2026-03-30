@@ -372,6 +372,8 @@ a.nav-item {
 }
 
 
+
+
 .post-full-content img {
   max-width: 100%;
   height: auto;
@@ -388,3 +390,29 @@ a.nav-item {
 .post-full-content b, .post-full-content strong { font-weight: bold; }
 .post-full-content i, .post-full-content em { font-style: italic; }
 .post-full-content u { text-decoration: underline; }
+
+.post-actions .submit-btn {
+  background-color: #4f46e5;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+}
+
+.post-actions .cancel-btn {
+  background-color: transparent;
+  color: #ef4444;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: 1px solid #ef4444;
+}
+
+.post-actions .submit-btn:hover {
+  opacity: 0.9;
+}
+
+.post-actions .cancel-btn:hover {
+  background-color: #fef2f2;
+}

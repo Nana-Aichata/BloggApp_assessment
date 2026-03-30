@@ -42,16 +42,32 @@ export async function createPost(formData: FormData) {
           version: 1,
         },
       },
-      author: user.id, // Automatically linked to the logged-in user
+      author: user.id,
     },
   })
 
   revalidatePath('/dashboard')
-  redirect('/dashboard') // Bring user back to see their new post
+  redirect('/dashboard') 
 }
 
 export async function logout() {
   const cookieStore = await cookies()
   cookieStore.delete('payload-token') // Clears the Payload session
   redirect('/') // Redirects to the login/home page
+}
+
+export async function deletePost(id: string) {
+  const payload = await getPayload({ config: configPromise })
+  const headerList = await headers()
+  
+  const { user } = await payload.auth({ headers: headerList })
+  if (!user) throw new Error('Unauthorized')
+
+  await payload.delete({
+    collection: 'posts',
+    id: id,
+  })
+
+  revalidatePath('/dashboard')
+  redirect('/dashboard')
 }

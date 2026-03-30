@@ -3,6 +3,7 @@ import configPromise from '@/payload.config'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import '../../dashboard.css'
+import { deletePost } from '../../actions'
 
 export default async function PostViewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
