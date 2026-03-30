@@ -46,11 +46,11 @@ export default async function Dashboard({
   })
 
   const userData = {
-    id: user.id,
-    profilePicture: typeof user.profilePicture === 'object' && user.profilePicture?.url 
-      ? { url: user.profilePicture.url } 
-      : undefined,
-  };
+  id: user.id,
+  profilePicture: typeof user.profilePicture === 'object' && user.profilePicture?.url 
+    ? user.profilePicture.url 
+    : '/user_profile.jpg',    
+};
 
   const getPlainText = (html: string) => {
     return html.replace(/<[^>]*>?/gm, ''); 

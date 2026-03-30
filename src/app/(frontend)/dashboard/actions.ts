@@ -71,3 +71,57 @@ export async function deletePost(id: string) {
   revalidatePath('/dashboard')
   redirect('/dashboard')
 }
+
+export async function updatePost(id: string, formData: FormData) {
+  const payload = await getPayload({ config: configPromise })
+  const headerList = await headers()
+  
+  const { user } = await payload.auth({ headers: headerList })
+  if (!user) throw new Error('Unauthorized')
+
+  const title = formData.get('title') as string
+  const content = formData.get('content') as string
+  const categories = JSON.parse(formData.get('categories') as string || '[]')
+
+  await payload.update({
+    collection: 'posts',
+    id: id,
+    data: {
+      title,
+      categories,
+      content: {
+        root: {
+          type: 'root',
+          format: '',
+          indent: 0,
+          version: 1,
+          direction: 'ltr',
+          children: [
+            {
+              type: 'paragraph',
+              format: '',
+              indent: 0,
+              version: 1,
+              direction: 'ltr',
+              children: [
+                {
+                  text: content,
+                  type: 'text',
+                  detail: 0,
+                  format: 0,
+                  mode: 'normal',
+                  style: '',
+                  version: 1,
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
+  })
+
+  revalidatePath(`/dashboard/post/${id}`)
+  revalidatePath('/dashboard')
+  redirect(`/dashboard/post/${id}`)
+}

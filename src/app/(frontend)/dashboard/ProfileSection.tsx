@@ -10,27 +10,25 @@ interface UserData {
   profilePicture?: string | Media | null; 
 }
 
-export default function ProfileSection({ user }: { user: UserData }) {
-  const getImageUrl = () => {
-    if (user.profilePicture && typeof user.profilePicture === 'object') {
-      return user.profilePicture.url;
-    }
-    return '/user_profile.jpg';
-  };
-
-  const finalImageUrl = getImageUrl();
+export default function ProfileSection({ user }: { user: any }) {
+  // If user.profilePicture is already a string (URL), use it; otherwise fallback
+  const finalImageUrl = typeof user.profilePicture === 'string' 
+    ? user.profilePicture 
+    : '/user_profile.jpg';
 
   return (
     <div className="profile-section">
       <div className="profile-container">
-        <Image
-          src={finalImageUrl}
-          alt="User Profile"
-          className="profile-circle"
-          width={60}
-          height={60}
-          priority
-        />
+        <div className="profile-circle"> {/* Added this wrapper to apply the CSS border */}
+          <Image
+            src={finalImageUrl}
+            alt="User Profile"
+            style={{ objectFit: 'cover' }} // Ensures the image fills the circle without stretching
+            width={140}  // Matches the .profile-circle size in your CSS
+            height={140}
+            priority
+          />
+        </div>
       </div>
     </div>
   );

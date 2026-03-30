@@ -2,12 +2,18 @@ import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { headers } from 'next/headers'
 import '../../dashboard.css'
 import { deletePost } from '../../actions'
+import DeletePostButton from './DeletePostButton'
 
 export default async function PostViewPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const payload = await getPayload({ config: configPromise })
+  const headerList = await headers()
+
+  const result = await payload.auth({ headers: headerList })
+  const user = result.user
 
   // to fetch the specific post
   const post = await payload.findByID({
@@ -18,8 +24,9 @@ export default async function PostViewPage({ params }: { params: Promise<{ id: s
 
   if (!post) return notFound()
 
-  
   const fullContent = (post.content?.root?.children as any)?.[0]?.children?.[0]?.text || ""
+
+  const isAuthor = user && post.author && (typeof post.author === 'object' ? post.author.id === user.id : post.author === user.id)
 
   return (
     <div className="dashboard-wrapper">
@@ -47,6 +54,16 @@ export default async function PostViewPage({ params }: { params: Promise<{ id: s
             dangerouslySetInnerHTML={{ __html: fullContent }}
             style={{ fontSize: '18px', lineHeight: '1.8' }}
           />
+
+          {isAuthor && (
+            <div className="post-admin-actions">
+              <Link href={`/dashboard/post/${id}/edit`} className="admin-btn btn-edit">
+                Edit Post
+              </Link>
+              
+              <DeletePostButton id={id} />
+            </div>
+          )}
         </article>
       </main>
     </div>
