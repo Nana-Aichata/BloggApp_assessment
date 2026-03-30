@@ -60,7 +60,7 @@ export default async function Dashboard({
     <div className="dashboard-wrapper">
       {/* SIDEBAR */}
       <aside className="sidebar">
-        {/* <ProfileSection user={userData} /> */}
+        <ProfileSection user={userData} />
         
         <nav className="sidebar-nav">
           <Link href="/dashboard" className={`nav-item ${!viewFilter ? 'active' : ''}`}>
