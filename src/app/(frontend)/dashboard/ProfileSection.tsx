@@ -1,5 +1,3 @@
-// (frontend)/dashboard/ProfileSection.tsx
-
 import Image from 'next/image';
 
 interface UserData {
@@ -10,7 +8,6 @@ interface UserData {
 }
 
 export default function ProfileSection({ user }: { user: UserData }) {
-  // Use the uploaded profile picture if it exists, otherwise use the local public image
   const finalImageUrl = user.profilePicture?.url || '/user_profile.jpg';
 
   return (

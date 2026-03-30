@@ -35,7 +35,6 @@ form {
   align-items: flex-start; 
 }
 
-/* Fix Labels - removing absolute positioning */
 .field-label, .category-label, .post-label {
   position: static !important; 
   text-align: left;

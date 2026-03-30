@@ -32,25 +32,23 @@ export default function CreatePostPage() {
     if (editorRef.current) editorRef.current.focus()
   }
 
-  // New function to handle local image uploads
+  // function to handle local image uploads
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         const base64Image = event.target?.result as string;
-        // Insert the image directly into the contentEditable area
         applyCommand('insertImage', base64Image);
       };
       reader.readAsDataURL(file);
     }
-    // Clear the input so the same image can be uploaded again if deleted
     e.target.value = '';
   }
 
   return (
     <>
-      <div className="main-content"> {/* Add this wrapper to match dashboard layout */}
+      <div className="main-content"> 
       <h1 className="page-title">Create a New Post</h1>
 
       {/* Tile Section */}
@@ -87,7 +85,6 @@ export default function CreatePostPage() {
                 </div>
               ))}
             </div>
-            {/* Hidden input to send array to server action */}
             <input type="hidden" name="categories" value={JSON.stringify(selectedCategories)} />
           </div>
 
@@ -108,7 +105,6 @@ export default function CreatePostPage() {
                   🖼️
                 </button>
                 
-                {/* Hidden File Input */}
                 <input 
                   type="file" 
                   ref={fileInputRef} 
@@ -134,21 +130,18 @@ export default function CreatePostPage() {
               </select>
             </div>
 
-            {/* This div replaces the textarea to allow real rich text rendering */}
             <div
               className="content-editable-area"
               contentEditable
               ref={editorRef}
               onInput={() => {
-                // This updates the hidden input so the form action gets the HTML
                 const hiddenInput = document.getElementById('content-input') as HTMLInputElement;
                 if (hiddenInput && editorRef.current) {
                   hiddenInput.value = editorRef.current.innerHTML;
                 }
               }}
             />
-            
-            {/* Hidden input to pass the editor content to the 'createPost' action */}
+        
             <input type="hidden" name="content" id="content-input" />
           </div>
 

@@ -1,4 +1,4 @@
-/* 1. Page Reset - Critical for matching page size */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,7 +12,6 @@ html, body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* 2. Main Wrapper */
 .dashboard-wrapper {
   display: flex;
   width: 100vw;
@@ -20,7 +19,7 @@ html, body {
   background-color: #f7e2ec;
 }
 
-/* 3. Sidebar - Fixed to the left */
+/* Sidebar */
 .sidebar {
   width: 280px;
   height: 100%;
@@ -40,8 +39,8 @@ html, body {
 .profile-container {
   display: flex;
   align-items: center;
-  gap: 15px; /* Adjust spacing as needed */
-  position: relative; /* Position context for the edit button if needed */
+  gap: 15px; 
+  position: relative; 
 }
 
 .profile-circle {
@@ -50,21 +49,7 @@ html, body {
   border-radius: 50%;
   border: 1.5px solid #fff;
   background-color: #ddd;
-  overflow: hidden; /* Important for keeping the image circular */
-}
-
-.edit-profile-btn {
-  background-color: transparent;
-  color: #888;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.2s;
-  padding: 0; /* Remove default button padding */
-}
-
-.edit-profile-btn:hover {
-  color: #111;
+  overflow: hidden; 
 }
 
 .sidebar-nav {
@@ -117,7 +102,7 @@ html, body {
   cursor: pointer;
 }
 
-/* 4. Main Content Area - Scrollable */
+/* Main Content */
 .main-content {
   flex-grow: 1;
   height: 100%;
@@ -127,7 +112,6 @@ html, body {
   flex-direction: column;
 }
 
-/* 5. Header Section */
 .content-header {
   display: flex;
   justify-content: space-between;
@@ -136,8 +120,8 @@ html, body {
 }
 
 .header-text {
-  margin-left: -50px; /* Pushes the entire block to the right */
-  text-align: left; /* Aligns the text inside the block to the right */
+  margin-left: -50px; 
+  text-align: left; 
 }
 
 .header-text h1 {
@@ -175,7 +159,7 @@ html, body {
   color: #ffffff;
 }
 
-/* 6. Categories Section */
+/* Categories Section */
 .categories-wrapper {
   position: relative;
   display: flex;
@@ -204,26 +188,24 @@ html, body {
   font-weight: 700;
 }
 
-/* The scrollable area */
 .category-list {
   display: flex;
   gap: 60px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  scrollbar-width: none; 
   flex-grow: 1;
 }
 
 .category-list::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome/Safari */
+  display: none; 
 }
 
-/* Individual items */
 .category-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-shrink: 0; /* Prevents circles from squishing */
+  flex-shrink: 0; 
   gap: 8px;
 }
 
@@ -234,9 +216,8 @@ html, body {
   border: 1.5px solid #1a1a1a;
   background-color: #ffffff3e;
   cursor: pointer;
-
-  display: flex;            /* Enables Flexbox */
-  justify-content: center;   /* Centers horizontally */
+  display: flex;           
+  justify-content: center;   
   align-items: center;
 }
 
@@ -254,21 +235,19 @@ html, body {
   font-style: italic;
 }
 
-/* Ensure Links in the sidebar behave like the buttons */
 a.nav-item {
   text-decoration: none;
   display: block;
 }
 
-/* Arrow Buttons */
 .nav-arrow-plain {
   background: none;
   border: none;
-  font-size: 24px; /* Make the arrow symbol larger */
+  font-size: 24px; 
   color: #1a1a1a;
   cursor: pointer;
   position: absolute;
-  top: 40%; /* Aligns with the circles, not the text */
+  top: 40%; 
   transform: translateY(-50%);
   z-index: 10;
   padding: 10px;
@@ -277,7 +256,7 @@ a.nav-item {
 
 .nav-arrow-plain:hover {
   opacity: 0.6;
-  transform: translateY(-50%) scale(1.2); /* Slight grow effect on hover */
+  transform: translateY(-50%) scale(1.2); 
 }
 
 .nav-arrow-plain.left {
@@ -288,7 +267,7 @@ a.nav-item {
   right: -60px;
 }
 
-/* 7. Post Card Styling */
+/* Post Card */
 .posts-list {
   display: flex;
   flex-direction: column;
@@ -299,8 +278,8 @@ a.nav-item {
   display: flex;
   width: 100%;
   min-height: 240px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px; 
+  border: 5px solid #410141;
+  border-radius: 10px; 
   overflow: hidden;
 }
 
@@ -325,8 +304,8 @@ a.nav-item {
 }
 
 .tag {
-  background-color: #d8b4fe;
-  border: 1px solid #a855f7;
+  background-color: #e08fe8;
+  border: 1px solid #66286c;
   padding: 4px 12px;
   border-radius: 16px;
   font-size: 11px;
@@ -352,8 +331,6 @@ a.nav-item {
   font-weight: 500;
   color: #9ca3af;
 }
-
-/* 8. create post form */
 
 .create-post-form-section {
   background: white;

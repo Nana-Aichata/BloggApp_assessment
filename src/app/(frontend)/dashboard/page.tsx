@@ -1,5 +1,3 @@
-// (frontend)/dashboard/page.tsx
-
 import { getPayload } from 'payload'
 import configPromise from '@/payload.config'
 import { headers } from 'next/headers'
@@ -18,10 +16,7 @@ export default async function Dashboard({
   const result = await payload.auth({ headers: await headers() })
   const user = result.user
 
-  // Ensure user is an object before accessing properties
   if (!user || typeof user !== 'object') {
-    // Handle the case where user is null or not an object
-    // You could redirect to login here
     return <div>Loading user...</div> 
   }
   
@@ -29,17 +24,15 @@ export default async function Dashboard({
   const categoryFilter = params.category as string
   const viewFilter = params.view as string
 
-  // Build the database query
   const query: any = {}
 
-  // Filter by category if selected
   if (categoryFilter) {
     query.categories = {
       contains: categoryFilter,
     }
   }
 
-  // Filter by current user if "My Posts" is clicked
+
   if (viewFilter === 'mine' && user) {
     query.author = {
       equals: user.id,
@@ -52,7 +45,6 @@ export default async function Dashboard({
     where: query,
   })
 
-  // Extract necessary user data, casting to User type for better type safety
   const userData = {
     id: user.id,
     profilePicture: user.profilePicture,
@@ -62,15 +54,13 @@ export default async function Dashboard({
     <div className="dashboard-wrapper">
       {/* SIDEBAR */}
       <aside className="sidebar">
-        {/* Pass the extracted user data to the client component */}
         <ProfileSection user={userData} />
         
         <nav className="sidebar-nav">
-          {/* Dashboard link shows everything */}
           <Link href="/dashboard" className={`nav-item ${!viewFilter ? 'active' : ''}`}>
             Dashboard
           </Link>
-          {/* My Posts link filters by user ID */}
+          
           <Link href="/dashboard?view=mine" className={`nav-item ${viewFilter === 'mine' ? 'active' : ''}`}>
             My Posts
           </Link>
@@ -112,7 +102,6 @@ export default async function Dashboard({
           {posts.docs.length > 0 ? (
             posts.docs.map((post) => (
               <div key={post.id} className="post-card">
-                <div className="post-image-box"></div>
                 <div className="post-content">
                   <div className="post-tags">
                     {post.categories?.map((cat: string) => (
