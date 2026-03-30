@@ -31,7 +31,7 @@ export default async function PostViewPage({ params }: { params: Promise<{ id: s
         <article className="full-post-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
           <header className="post-header" style={{ marginBottom: '40px' }}>
             <div className="post-tags" style={{ marginBottom: '10px' }}>
-              {post.categories?.map((cat: string) => (
+              {Array.isArray(post.categories) && (post.categories as string[]).map((cat: string) => (
                 <span key={cat} className="tag" style={{ marginRight: '8px' }}>{cat}</span>
               ))}
             </div>
