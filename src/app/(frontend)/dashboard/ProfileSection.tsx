@@ -1,14 +1,26 @@
 import Image from 'next/image';
 
+interface Media {
+  url: string;
+  [key: string]: any; 
+}
+
 interface UserData {
   id: string;
-  profilePicture?: {
-    url: string;
-  } | null; // Allow null to satisfy the incoming data
+  // This matches the error: 'string | Media | null | undefined'
+  profilePicture?: string | Media | null; 
 }
 
 export default function ProfileSection({ user }: { user: UserData }) {
-  const finalImageUrl = user.profilePicture?.url || '/user_profile.jpg';
+  // Logic to extract the URL whether it's an object or a string
+  const getImageUrl = () => {
+    if (user.profilePicture && typeof user.profilePicture === 'object') {
+      return user.profilePicture.url;
+    }
+    return '/user_profile.jpg'; // Fallback
+  };
+
+  const finalImageUrl = getImageUrl();
 
   return (
     <div className="profile-section">
