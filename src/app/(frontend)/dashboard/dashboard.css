@@ -1,3 +1,16 @@
+/* Switch to side-by-side only on larger screens */
+@media (min-width: 1024px) {
+  .dashboard-wrapper {
+    flex-direction: row;
+  }
+  .sidebar {
+    width: 280px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+}
+
 
 * {
   box-sizing: border-box;
@@ -269,6 +282,18 @@ a.nav-item {
 }
 
 /* Post Card */
+
+@media (max-width: 600px) {
+  .post-card {
+    padding: 15px;
+    border-width: 3px;
+  }
+  
+  .post-card h2 {
+    font-size: 1.25rem;
+  }
+}
+
 .posts-list {
   display: flex;
   flex-direction: column;
@@ -350,12 +375,44 @@ a.nav-item {
   color: #9ca3af;
 }
 
+.posts-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Single column for mobile */
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for tablets */
+  }
+}
+
+@media (min-width: 1200px) {
+  .posts-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for desktop */
+  }
+}
+
 .create-post-form-section {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   margin-top: 2rem;
+}
+
+@media (max-width: 480px) {
+  .post-actions {
+    flex-direction: column; /* Stack buttons vertically on very small phones */
+    width: 100%;
+  }
+  
+  .post-actions a, 
+  .post-actions button {
+    width: 100%; /* Make buttons full-width for easier tapping */
+    text-align: center;
+    padding: 12px; /* Increase "hit area" for thumbs */
+  }
 }
 
 .form-group input, 
