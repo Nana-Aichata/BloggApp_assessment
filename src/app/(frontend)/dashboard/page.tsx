@@ -59,6 +59,7 @@ export default async function Dashboard({
 
   return (
     <div className="dashboard-wrapper">
+
       {/* SIDEBAR */}
       <aside className="sidebar">
         <ProfileSection user={userData} />
@@ -97,6 +98,7 @@ export default async function Dashboard({
           )}
         </header>
 
+        {/* CATEGORIES SECTION */}
         <section className="categories-section">
           <div className="section-header">
             <h2>Top Categories</h2>
@@ -105,6 +107,7 @@ export default async function Dashboard({
           <CategoryList />
         </section>
     
+        {/* POSTS LIST */}
         <section className="posts-list">
         {posts.docs.map((post: any, index: number) => {
           const rawContent = post.content?.root?.children?.[0]?.children?.[0]?.text || "";
