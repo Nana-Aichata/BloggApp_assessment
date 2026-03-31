@@ -6,6 +6,7 @@ import { logout } from './actions'
 import CategoryList from './CategoryList'
 import './dashboard.css'
 import ProfileSection from './ProfileSection'
+import * as motion from "framer-motion/client"
 
 export default async function Dashboard({
   searchParams,
@@ -105,35 +106,44 @@ export default async function Dashboard({
         </section>
     
         <section className="posts-list">
-          {posts.docs.map((post: any) => {
-            const rawContent = post.content?.root?.children?.[0]?.children?.[0]?.text || "";
+        {posts.docs.map((post: any, index: number) => {
+          const rawContent = post.content?.root?.children?.[0]?.children?.[0]?.text || "";
 
-            return (
-              <div key={post.id} className="post-card">
-                <Link href={`/dashboard/post/${post.id}`} className="post-link-wrapper" style={{ textDecoration: 'none', color: 'inherit', width: '100%', display: 'flex' }}>
-                  <div className="post-content">
-                    <div className="post-tags">
-                      {post.categories?.map((cat: string) => (
-                        <span key={cat} className="tag">{cat}</span>
-                      ))}
-                    </div>
-                    <h3 className="text-xl font-bold">{post.title}</h3>
-                    
-                    <div 
-                      className="post-text post-text-content" 
-                      dangerouslySetInnerHTML={{ __html: rawContent }} 
-                    />
-
-                    <div className="post-meta">
-                      <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                      <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
-                    </div>
+          return (
+            <motion.div 
+            key={post.id}      
+            className="post-card"
+            initial={{ opacity: 0, y: 20 }}                 
+            animate={{ opacity: 1, y: 0 }}        
+            transition={{ duration: 0.4, delay: index * 0.1 }}        
+            whileHover={{ y: -5, transition: { duration: 0.2 } }}>        
+                              
+              <Link 
+                href={`/dashboard/post/${post.id}`} 
+                className="post-link-wrapper" 
+                style={{ textDecoration: 'none', color: 'inherit', width: '100%', display: 'flex' }}>
+                <div className="post-content">
+                  <div className="post-tags">
+                    {post.categories?.map((cat: string) => (
+                      <span key={cat} className="tag">{cat}</span>
+                    ))}
                   </div>
-                </Link>
-              </div>
-            )
-          })}
-        </section>
+                  <h3 className="text-xl font-bold">{post.title}</h3>
+                  
+                  <div 
+                    className="post-text post-text-content" 
+                    dangerouslySetInnerHTML={{ __html: rawContent }} />
+
+                  <div className="post-meta">
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+                    <span>{typeof post.author === 'object' ? post.author?.username : 'Author'}</span>
+                  </div>
+                </div>
+              </Link>
+            </motion.div>
+          )
+        })}
+      </section>
       </main>
     </div>
   )

@@ -15,7 +15,6 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
 
   if (!post) return notFound()
 
-  // Extract text from the Lexical content structure used in your actions.ts
   const initialContent = (post.content?.root?.children as any)?.[0]?.children?.[0]?.text || ""
 
   const initialData = {
